@@ -1,0 +1,79 @@
+<ion-view view-title="{{getHistoryLabel()}}" class="item-text-wrap">
+  <ion-content>
+    <ion-list ng-show="!options.addressMode">
+          <ion-item class="item-accordion" ng-show="person">
+           <div class="cu-font" style="padding-left:10px;">
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" ng-show="person.name">Ваше имя:</div>
+             <div style="font-size: 6vw;color: black;">{{person.name}}</div>
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" data-ng-if="person.street || person.building">Адрес доставки:</div>
+             <div style="font-size: 6vw;color: black;">{{person.street}}
+                  <span data-ng-if="person.street && person.building"> , дом.</span>{{person.building}}
+                  <span data-ng-if="person.flat">-</span>{{person.flat}}</div>
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" data-ng-if="person.phone || client.phone">Телефон:</div>
+             <div style="font-size: 6vw;color: black;">{{person.phone}} <span ng-show="!person.phone">{{client.phone}}</span></div>
+           </div>
+          </ion-item>
+    </ion-list>
+      
+      
+    <div class="list">
+    <label class="item item-input" ng-show="clinfo.length>0&&!options.addressMode">
+        <span class="hg-font" style="font-size: 5.5vw;color:#a7a7a7">
+          <center><b>Выберите адрес доставки</b></center>
+        </span>
+        <!--select ng-model="seladdr" class="hg-font" ng-options="addr.id as (addr|addressFilter) for addr in clinfo"></select-->        
+    </label>
+    <ion-radio ng-repeat="addr in clinfo" ng-show="clinfo.length>0&&!options.addressMode" ng-model="person.id" ng-value="addr.id" ng-click="saveAddress(addr.id)" class="item item-text-wrap"><span ng-bind="addr.city"> </span><span ng-bind="addr.street"> </span> <span ng-bind="addr.building"></span>, кв.<span ng-bind="addr.flat"></span>, <span ng-bind="addr.name"></span></ion-radio>
+    <label class="item" ng-show="options.addressMode">
+        <span class="hg-font" style="font-size: 5.5vw;color:#a7a7a7">
+          <center><b>Введите ваши данные</b></center>
+        </span>
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label cu-font" style="font-size: 5.5vw;">Ваше имя</span>
+        <input type="text" class="hg-font" capitalize-first autocorrect="off" style="font-size: 5.5vw;" placeholder="Ваше имя" ng-model="newperson.newname">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&!client.token">
+        <span class="input-label cu-font" style="font-size: 5.5vw;">Телефон</span>
+        <!--input type="tel" class="hg-font" style="font-size: 5.5vw;"placeholder="Телефон" ng-model="phonenum" ng-disabled="client.phone"-->
+        <input class="input-phone hg-font" phone-input type="tel" placeholder="Телефон" ng-model="phonenum" ng-bind="phonenum | tel" ng-disabled="client.phone">
+    </label>
+    <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&!client.phone" ng-click="checkPhone(phonenum)">Отправить СМС</button>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.phone&&!client.token">
+        <span class="input-label cu-font" style="font-size: 5.5vw;">Код из СМС-сообщения</span>
+        <input type="tel" class="hg-font" style="font-size: 5.5vw;"placeholder="Код" ng-model="phone_code">
+    </label>
+    <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&client.phone&&!client.token" ng-click="activatePhone(phone_code)">Подтвердить</button>
+
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label cu-font" style="font-size: 5.5vw;">Улица</span>
+        <input type="text" class="hg-font" autocapitalize="sentences" style="font-size: 5.5vw;" placeholder="Улица" ng-model="newperson.newstreet">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 5.5vw;">Дом</span>
+        <input type="text" class="hg-font" style="font-size: 5.5vw;" placeholder="Дом" ng-model="newperson.newbuilding">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 5.5vw;">Квартира</span>
+        <input type="number" class="hg-font" style="font-size: 5.5vw;" placeholder="Квартира" ng-model="newperson.newflat">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 5.5vw;">Подъезд</span>
+        <input type="number" class="hg-font" style="font-size: 5.5vw;" placeholder="Подъезд" ng-model="newperson.newentrance">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 5.5vw;">Код</span>
+        <input type="text"  class="hg-font" style="font-size: 5.5vw;" placeholder="Код" ng-model="newperson.newcode">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 5.5vw;">Этаж</span>
+        <input type="number"  class="hg-font" style="font-size: 5.5vw;"  placeholder="Этаж" ng-model="newperson.newfloor">
+    </label>
+    </div>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="!options.addressMode" ng-click="options.addressMode = true">Ввести новый адрес</button>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&clinfo.length>0" ng-click="options.addressMode = false">Выбрать адрес</button>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&newperson.newstreet&&newperson.newbuilding&&newperson.newflat&&newperson.newname&&client.token" ng-click="createPerson(newperson)">Создать и сохранить</button>
+      <!--button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="!options.addressMode&&seladdr" ng-click="saveAddress(seladdr)">Сохранить</button-->
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="!options.addressMode&&client" ng-click="resetClient()">Сбросить данные</button>
+  </ion-content>
+</ion-view>

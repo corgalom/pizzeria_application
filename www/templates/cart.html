@@ -1,0 +1,91 @@
+<ion-view view-title="Мой заказ">
+    <ion-nav-title> 
+      <span class="hg-font" style="font-size: 20px;color: #fff">Мой заказ</span>
+    </ion-nav-title>
+
+  <ion-content style="padding-left:10px;padding-right:10px;">    
+    <div ng-show="cart.length">
+      <ion-list>
+        <div ng-repeat="product in cart">
+          <ion-item class="item item-thumbnail-left item-text-wrap">
+            <img ng-src="{{imgurl+'prods/'+product.id+'.png'}}" ng-click="goProduct(product.id)"/>
+            <div>
+               <div class="cu-font categoryfont">{{product.name}}</div>
+               <div class="hg-font text-left" style="margin-left:0px; padding-left:0px;font-size: 5vw;color:#ff6915;">{{product.price | integerFilter}} ГРН.</div> 
+               <div class="row row-top">
+                 <div class="hg-font col text-right" style="margin-left:0px; padding-left:0px;">
+                     <button class="button my-minus-button" style="margin-top:-10px" ng-click="removeFromCart(product)"></button> 
+                     <span class="cu-font" style="font-size: 9vw;color: black;">{{product.quantity}}</span>
+                     <button class="button my-plus-button" style="margin-top:-10px" ng-click="addToCart(product)"></button>
+                 </div> 
+               </div>             
+            </div>
+          </ion-item>
+          <div class="item-divider" style="height:0px;"></div>
+        </div>
+      </ion-list>
+      <div class="hg-font text-right" style="margin-left:0px; padding-left:0px;padding-bottom:15px;">
+          <span class="cu-font" style="font-size: 9vw;color: gray;">Всего: </span>
+          <span class="hg-font text-left" style="margin-left:0px; padding-left:0px;font-size: 10vw;color:#ff6915;">{{calculateTotal()}} ГРН.</span> 
+      </div> 
+
+      <button class="button button-block"  ng-show="!person" style="font-size: 7.5vw;border: none;background-color: #c7c7c7;color:white;" ng-click="openCartModal()">
+              <span>Адрес доставки</span></button>
+
+      <ion-list ng-show="person">
+          <ion-item class="item-stable" ng-click="toggleDetails()" 
+                    ng-class="{active: isDetailsShown()}" style="border: none;background-color: white;">
+            <div class="row row-top">
+              <div class="cu-font col text-left" style="margin-left:-10px;font-size: 6vw;color: gray;">Детали доставки</div>
+              <div class="col text-right" style="margin-left:0px; padding-left:0px;">
+                  <i class="icon" ng-class="isDetailsShown() ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+              </div>
+            </div>
+          </ion-item>
+          <ion-item class="item-accordion" ng-show="isDetailsShown()">
+           <div class="cu-font" style="padding-left:10px;">
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" ng-show="person.name">Ваше имя:</div>
+             <div style="font-size: 6vw;color: black;">{{person.name}}</div>
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" data-ng-if="person.street || person.building">Адрес доставки:</div>
+             <div style="font-size: 6vw;color: black;">{{person.street}}
+                  <span data-ng-if="person.street && person.building"> , дом.</span>{{person.building}}
+                  <span data-ng-if="person.flat">-</span>{{person.flat}}</div>
+             <div style="padding-top:15px;font-size: 6vw;color: gray;" data-ng-if="person.phone || client.phone">Телефон:</div>
+             <div style="font-size: 6vw;color: black;">{{person.phone}} <span ng-show="!person.phone">{{client.phone}}</span></div>
+               <button class="button button-block" style="font-size: 7.5vw;border: none;background-color: #c7c7c7;color:white;" ng-click="openCartModal()">
+               <span ng-show="person">Редактировать</span><span ng-show="!person">Адрес доставки</span></button>
+           </div>
+          </ion-item>
+      </ion-list>
+      <div class="row row-center" style="padding-top:15px;">
+        <div class="cu-font col" style="margin-left:0px;">
+            <span style="font-size: 5vw;color: #c7c7c7; position:relative;top:5px;">Время:</span>
+            <button class="button button-small" style="background-color: #c7c7c7;color:white;" ng-click="selectDeliveryTime()">
+              <span ng-show="del_time" class="hg-font" style="font-size: 6vw;font-weight: bold;color:black;">{{del_time | date:"HH:mm"}}</span>
+              <span ng-show="!del_time" class="hg-font" style="font-size: 6vw;font-weight: bold;color:black;">17:00</span>
+            </button>
+        </div>
+        <div class="cu-font col" style="margin-left:0px;font-size: 7vw;">
+            <span style="font-size: 5vw;color: #c7c7c7; position:relative;top:5px;">Дата:</span>
+            <button class="button button-small" style="background-color: #c7c7c7;color:white;" ng-click="selectDeliveryDate()">
+                <span ng-show="del_date"  class="hg-font" style="font-size: 6vw;font-weight: bold;color:black;">{{del_date | date:"dd.MM.yy"}}</span>
+                <span ng-show="!del_date" class="hg-font" style="font-size: 6vw;font-weight: bold;color:black;">сегодня</span>
+            </button>
+        </div>
+      </div>             
+      <div class="list" style="padding-top:15px;">
+        <label class="item item-input cu-font">
+           <input type="text" placeholder="Комментарий к заказу"  ng-model="comment">
+        </label>
+      </div>
+        <!--button class="button button-balanced" ng-click="openCartModal()" ng-show="client.person">Сменить</button>
+        <button class="button button-balanced" ng-click="openCartModal()" ng-show="client.id&&!client.person">Введите адрес</button>
+        <button class="button button-balanced" ng-click="openCartModal()" ng-show="!client.id">Введите контактные данные</button-->
+    </div>
+    <div class="hg-font text-center" ng-show="!cart.length" style="padding-top:30mm;font-size: 10vw;color:#ff6915;">Пусто</div>
+  </ion-content>
+<ion-footer-bar align-title="center" class="bar" style="background-color: #ff6915;" ng-click="prepareOrder()" ng-show="person&&cart.length>0">
+  <h1 class="np-font title" style="font-size: 7.5vw;color: #fff">Оформить заказ</h1>
+</ion-footer-bar>
+</ion-view>
+

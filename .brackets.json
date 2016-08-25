@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/vedroid/pizzapp2/platforms/android/build/intermediates/assets/release/www/cordova.js",
+        "C:/vedroid/pizzapp2/platforms/android/build/intermediates/assets/release/www/plugins/cordova-plugin-whitelist/whitelist.js"
+    ]
+}

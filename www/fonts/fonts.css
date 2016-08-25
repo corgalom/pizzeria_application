@@ -1,0 +1,70 @@
+@font-face {
+	font-family: 'Hagin Caps Medium';
+	src:url('HaginCapsMedium.eot') format('embedded-opentype'),
+	    url('HaginCapsMedium.woff') format('woff'),
+	    url('HaginCapsMedium.ttf ') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Cuprum';
+	src:url('CuprumRegular.eot') format('embedded-opentype'),
+	    url('CuprumRegular.woff') format('woff'),
+	    url('CuprumRegular.ttf ') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Nautilus Pompilius';
+	src:url('NautilusPompiliusRegular.eot') format('embedded-opentype'),
+	    url('NautilusPompiliusRegular.woff') format('woff'),
+	    url('NautilusPompiliusRegular.ttf ') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+[class^="hg-font"], [class*=" hg-font"] {
+	font-family: 'Hagin Caps Medium';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[class^="cu-font"], [class*=" cu-font"] {
+	font-family: 'Cuprum';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[class^="np-font"], [class*=" np-font"] {
+	font-family: 'Nautilus Pompilius';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+

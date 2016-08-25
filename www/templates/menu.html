@@ -1,0 +1,44 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable my-bar-color" ng-init="getCart()">
+        
+      <ion-nav-back-button class="hg-font" style="font-size: 28px;color: #fff">
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button-clear" menu-toggle="left">
+            <span class="button-icon my-menu-button"></span>
+        </button>
+      </ion-nav-buttons>
+
+      <ion-nav-buttons side="right">
+            <button class="button-clear" ng-click="goCart()"><span class="button-icon header-badge" ng-class="{true: 'my-cart-button', false: 'my-cart-button-full'}[cart.sum==0]">{{cart.sum}}</span></button>
+      </ion-nav-buttons>
+        
+        
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable" style="background-color: #ff6915;">
+      <h1 class="title hg-font" style="text-align:left;font-size: 1.7em;color:white;">Разделы</h1>
+    </ion-header-bar>
+    <ion-content class="my-menu">
+      <ion-list class="cu-font">
+        <ion-item nav-clear menu-close href="#/app/categories">
+          Меню
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/browse">
+          Мои заказы
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/clientinfo">
+          Настройки
+        </ion-item>
+        <ion-item nav-clear menu-close href="#" ng-click="contact()">
+          Позвонить
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

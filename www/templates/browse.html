@@ -1,0 +1,31 @@
+<ion-view view-title="История">
+  <ion-nav-title> 
+      <span class="hg-font" style="font-size: 18px;color: #fff">История заказов</span>
+  </ion-nav-title>
+  <ion-content ng-init="initHistory()">
+      <ul class="list" ng-show="history">
+        <li class="item item-text-wrap" ng-repeat="ord in history">
+           <div class="row row-center">
+               <div class="col text-left" style="margin-left:0px; padding-left:0px;">
+                  <div class="hg-font" style="font-size: 10vw;color:#ff6915;">Заказ №{{ord.number}}</div>
+               </div> 
+               <div class="cu-font col text-center">
+                 <button class="button button-small" style="background-color: #c7c7c7;color:white;">
+                     <span class="hg-font" style="font-size: 6vw;font-weight: bold;color:black;">{{ord.name}}</span>
+                 </button>
+               </div>
+           </div> 
+           <div style="margin-top:-15px;padding-left:25px;font-size: 8pt;color:grey;">{{ord.delivery_date | date:"dd.MM.yy"}}</div>
+           <ul class="leaders" style="background-color: white;">
+             <li ng-repeat="prod in ord.products">
+               <span>{{prod.name}}</span>
+               <span>{{prod.price}}&nbsp;грн.</span>
+               <span data-ng-if="prod.count > 1">{{prod.count}}x</span>
+             </li>
+           </ul>
+           <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-click="copyProducts(ord.products)">В корзину</button>
+        </li>
+      </ul>
+      <div class="hg-font text-center" ng-show="!history" style="padding-top:20mm;font-size: 10vw;color:#ff6915;">Заказов нет</div>
+  </ion-content>
+</ion-view>

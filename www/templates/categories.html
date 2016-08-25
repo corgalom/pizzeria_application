@@ -1,0 +1,47 @@
+<ion-view class="item-text-wrap" cache-view="false">
+    <ion-nav-title> 
+      <span class="hg-font" style="font-size: 20px;color: #fff">{{getHistoryLabel()}}</span>
+      <span class="hg-font" style="font-size: 20px;color: #fff" data-ng-if="historyLabel.length < 1">Меню</span>
+    </ion-nav-title>
+<!--div class="bar bar-subheader" ng-show="category!=0">
+  <h2 class="title" ng-click="goBack()" >Назад</h2>
+</div-->
+  <ion-content scroll="true" has-bouncing="false">
+    <p ng-show="category!=0"><br clear="all"><br clear="all"></p>
+    <ion-list>
+      <div ng-repeat="product in products">
+        <div class="item-divider"></div>
+        <ion-item class="item item-thumbnail-left item-text-wrap">
+          <img ng-src="{{imgurl+'prods/'+product.id+'.png'}}"  ng-click="goProduct(product.id)"/>
+          <div>
+             <div class="cu-font categoryfont" ng-click="goProduct(product.id)">{{product.name}}</div>
+             <div class="row row-bottom"  ng-click="goProduct(product.id)">
+               <div class="hg-font col text-left" style="margin-left:0px; padding-left:0px;font-size: 5vw;color:#ff6915;">{{product.price}} ГРН.</div> 
+               <div class="cu-font col" style="font-size: 4vmin;color: #b6b6b6;">{{product.weight}} кг./л./шт.</div>
+             </div>
+             <div class="row row-bottom">
+               <div class="col text-right" data-ng-if="product.quantity<1">
+                 <button class="button hochu" ng-click="addToCart(product)"><span class="np-font" style="font-size: 20px;color: #fff">Хочу!</span></button>
+               </div>
+               <div class="hg-font col text-right" style="margin-left:0px; padding-left:0px;" ng-show="product.quantity > 0">
+                     <button class="button my-minus-button" style="margin-top:-10px" ng-click="removeFromCart(product)"></button> 
+                     <span class="cu-font" style="font-size: 9vw;color: black;">{{product.quantity}}</span>
+                     <button class="button my-plus-button" style="margin-top:-10px" ng-click="addToCart(product)"></button>
+               </div> 
+             </div>
+          </div>
+          <!--p>{{product.id}}</p-->
+        </ion-item>
+      </div>
+
+      <div ng-repeat="category in categories">
+        <div class="item-divider"></div>
+        <ion-item class="item item-thumbnail-left item-text-wrap" style="padding-top:5px;padding-bottom:5px;" ng-href="#/app/categories/:{{category.id}}">
+          <img ng-src="{{imgurl+'cats/'+category.id+'.png'}}"/>
+          <h2 class="cu-font elementCenterAlign" style="font-size: 5vw;">{{category.name}}</h2>
+          <!--p>{{category.id}}</p-->
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

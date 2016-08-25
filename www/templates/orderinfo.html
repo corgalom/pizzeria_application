@@ -1,0 +1,79 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Регистрация</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Закрыть</button>
+    </div>
+  </ion-header-bar>
+  <ion-content ng-init="initAddress()">
+    <div class="cu-font"  ng-hide="client.token" style="padding-left:5px;font-size: 5vw;color:#a7a7a7">
+      Введите номер мобильного телефона (10 цифр) и должитесь получения СМС с кодом регистрации
+    </div>
+    <div class="list" >
+      <div class="item item-input-inset" ng-hide="client.token">
+        <label class="item-input-wrapper">
+          <input class="input-phone hg-font" phone-input type="tel" placeholder="Телефон" ng-model="phonenum" ng-bind="phonenum | tel" ng-disabled="client.phone">
+        </label>
+        <button class="button button-small" ng-click="checkPhone(phonenum)">
+          Получить код
+        </button>
+      </div>
+      <div class="item item-input-inset" ng-show="client.phone&&!client.token">
+        <label class="item-input-wrapper">
+          <input type="number" placeholder="Введите код" ng-model="SMScode">
+        </label>
+        <button class="button button-small" ng-click="activatePhone(SMScode)">
+          Подтвердить
+        </button>
+      </div>
+
+    <label class="item item-input" ng-show="clinfo.length>0&&!options.addressMode">
+        <span class="hg-font" style="font-size: 6vw;color:#a7a7a7">
+          <center><b>Выберите адрес доставки</b></center>
+        </span>
+        <!--select ng-model="seladdr" ng-options="addr.id as (addr|addressFilter) for addr in clinfo"></select-->
+        
+    </label>
+    <ion-radio ng-repeat="addr in clinfo" ng-show="clinfo.length>0&&!options.addressMode" ng-model="person.id" ng-value="addr.id" ng-click="saveAddress(addr.id)" class="item item-text-wrap"><span ng-bind="addr.city"> </span><span ng-bind="addr.street"> </span> <span ng-bind="addr.building"></span>, кв.<span ng-bind="addr.flat"></span>, <span ng-bind="addr.name"></span></ion-radio>      
+
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label cu-font" style="font-size: 6vw;">Ваше имя</span>
+        <input type="text" class="hg-font" capitalize-first style="font-size: 6vw;" placeholder="Ваше имя" ng-model="newperson.newname">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label cu-font" style="font-size: 6vw;">Улица</span>
+        <input type="text" class="hg-font" style="font-size: 6vw;" placeholder="Улица" ng-model="newperson.newstreet">
+    </label>
+
+    <!--label class="item item-input" style="padding-top:15px;padding-bottom:15px;" ng-show="options.addressMode&&client.token">
+        <span class="input-label hg-font" style="font-size: 6vw;color:#a7a7a7">Улица</span>
+        <select placeholder="Улица" style="width: 63%" class="hg-font" ng-options="street as street.name for street in streets" ng-model="newstreet">
+        </select>
+    </label-->
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 6vw;">Дом</span>
+        <input type="text" class="hg-font" style="font-size: 6vw;" placeholder="Дом" ng-model="newperson.newbuilding">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 6vw;">Квартира</span>
+        <input type="number" class="hg-font" style="font-size: 6vw;" placeholder="Квартира" ng-model="newperson.newflat">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 6vw;">Подъезд</span>
+        <input type="number" class="hg-font" style="font-size: 6vw;" placeholder="Подъезд" ng-model="newperson.newentrance">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 6vw;">Код</span>
+        <input type="text"  class="hg-font" style="font-size: 6vw;" placeholder="Код" ng-model="newperson.newcode">
+    </label>
+    <label class="item item-input item-floating-label" ng-show="options.addressMode&&client.token">
+        <span class="input-label" style="font-size: 6vw;">Этаж</span>
+        <input type="number"  class="hg-font" style="font-size: 6vw;"  placeholder="Этаж" ng-model="newperson.newfloor">
+    </label>
+    </div>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="!options.addressMode" ng-click="options.addressMode = true">Ввести новый адрес</button>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&clinfo.length>0" ng-click="options.addressMode = false">Выбрать адрес</button>
+      <button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="options.addressMode&&newperson.newstreet&&newperson.newbuilding&&newperson.newflat&&newperson.newname" ng-click="createPerson(newperson)">Создать и сохранить</button>
+      <!--button class="button button-block hochu np-font" style="color:white; font-size:8vw;" ng-show="!options.addressMode" ng-click="saveAddress(seladdr)">Сохранить</button-->
+  </ion-content>
+</ion-modal-view>
